@@ -1,0 +1,219 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+import sys
+from Tkinter import *
+import tkMessageBox
+import tkFileDialog
+import wave
+import struct
+import tkSnack
+import pyaudio
+
+global wavefile1
+global stream1
+global num_channels1
+global sample_rate1
+global sample_width1
+global num_frames1
+global total_samples1
+global fmt1
+global integer_data1
+global amplitudescaler1
+global timeshifter1
+global timescaler1
+global wavefile2
+global stream2
+global num_channels2
+global sample_rate2
+global sample_width2
+global num_frames2
+global total_samples2
+global fmt2
+global integer_data2
+global amplitudescaler2
+global timeshifter2
+global timescaler2
+global wavefile3
+global stream3
+global num_channels3
+global sample_rate3
+global sample_width3
+global num_frames3
+global total_samples3
+global fmt3
+global integer_data3
+global amplitudescaler3
+global timeshifter3
+global timescaler3
+
+
+
+
+def Open1():
+    wavefile1 = tkFileDialog.askopenfile()
+    stream1 = wave.open(wavefile1,'r')
+    label=Label(text=stream1)
+    label.pack()
+    num_channels1 = stream1.getnchannels()
+    sample_rate1 = stream1.getframerate()
+    sample_width1 = stream1.getsampwidth()
+    num_frames1 = stream1.getnframes()
+
+    raw_data = stream1.readframes(num_frames1)
+    stream1.close()
+    total_samples1 = num_frames1 * num_channels1
+
+    if sample_width1 == 1:
+        fmt1 = "%iB" % total_samples1
+    elif sample_width == 2:
+        fmt1 = "%ih" % total_samples1
+    else:
+        raise ValueError("Only supports 8 and 16 bit audio formats")
+
+    integer_data1 = struct.unpack(fmt1, raw_data)
+    del raw_data
+
+def Store_value_amplitude1(val):
+    amplitudescaler1=val
+
+def Store_value_timeshifting1(val):
+    timeshifter1 = val
+
+def Store_value_timescaling1(val):
+    timescaler1=val
+
+def Playwavfile1():
+    fout1 = wave.open("beep.wav",'rb')
+    p1 = pyaudio.PyAudio()
+    play1 = p1.open(format = p1.get_format_from_width(fout1.getsampwidth()),channels = fout1.getnchannels(),rate = fout1.getframerate(), output = True)
+    readdata1 = fout1.readframes(1024)
+    while readdata1 != '':
+        play1.write(readdata1)
+        readdata1 = fout1.readframes(1024)
+    play1.close()
+    p1.terminate()
+
+def Open2():
+    wavefile2 = tkFileDialog.askopenfile()
+    stream2 = wave.open(wavefile2,'r')
+    num_channels2 = stream2.getnchannels()
+    sample_rate2 = stream2.getframerate()
+    sample_width2 = stream2.getsampwidth()
+    num_frames2 = stream2.getnframes()
+
+    raw_data = stream2.readframes(num_frames2)
+    stream2.close()
+    total_samples2 = num_frames2 * num_channels2
+
+    if sample_width2 == 1:
+        fmt2 = "%iB" % total_samples2
+    elif sample_width2 == 2:
+        fmt2 = "%ih" % total_samples2
+    else:
+        raise ValueError("Only supports 8 and 16 bit audio formats")
+
+    integer_data2 = struct.unpack(fmt2, raw_data)
+    del raw_data
+   #  print integer_data
+
+def Store_value_amplitude2(val):
+    amplitudescaler2=val
+
+def Store_value_timeshifting2(val):
+    timeshifter2 = val
+
+def Store_value_timescaling2(val):
+    timescaler2=val
+
+def Playwavfile2():
+    fout2 = wave.open("beep.wav",'rb')
+    p2 = pyaudio.PyAudio()
+    play2 = p2.open(format = p2.get_format_from_width(fout2.getsampwidth()),channels = fout2.getnchannels(),rate = fout2.getframerate(), output = True)
+    readdata2 = fout2.readframes(1024)
+    while readdata2 != '':
+        play2.write(readdata2)
+        readdata2 = fout2.readframes(1024)
+    play2.close()
+    p2.terminate()
+
+
+def Open3():
+        wavefile3 = tkFileDialog.askopenfile()
+        stream3 = wave.open(wavefile3,'r')
+        num_channels3 = stream3.getnchannels()
+        sample_rate3 = stream3.getframerate()
+        sample_width3 = stream3.getsampwidth()
+        num_frames3 = stream3.getnframes()
+
+        raw_data = stream3.readframes(num_frames3)
+        stream3.close()
+        total_samples3 = num_frames3 * num_channels3
+
+        if sample_width3 == 1:
+            fmt3 = "%iB" % total_samples3
+        elif sample_width3 == 2:
+            fmt3 = "%ih" % total_samples3
+        else:
+            raise ValueError("Only supports 8 and 16 bit audio formats")
+
+        integer_data3 = struct.unpack(fmt3, raw_data)
+        del raw_data
+        print integer_data
+
+def Store_value_amplitude3(val):
+    amplitudescaler3=val
+
+def Store_value_timeshifting3(val):
+    timeshifter3 = val
+
+def Store_value_timescaling3(val):
+    timescaler3=val
+
+def Playwavfile3():
+    fout3 = wave.open("beep.wav",'rb')
+    p3 = pyaudio.PyAudio()
+    play3 = p3.open(format = p3.get_format_from_width(fout3.getsampwidth()),channels = fout3.getnchannels(),rate = fout3.getframerate(), output = True)
+    readdata3 = fout3.readframes(1024)
+    while readdata3 != '':
+        play3.write(readdata3)
+        readdata3 = fout3.readframes(1024)
+    play3.close()
+    p3.terminate()
+
+
+
+
+Gui = Tk()
+Gui.geometry('900x900')
+Gui.title('Wave Mixer')
+#graphics=Canvas(Gui)
+#graphics.pack()
+#graphics.create_line(0,40,1000,40,fill='black')
+#graphics.create_text(450,20,font=("Purisa",20),text="Wave Mixer")
+#graphics.create_line(5,50,250,50,fill="black")
+#graphics.create_text(20,50,font=("Pursia",10),text="Wave 1")
+label1=Label(text="Wave 1").place(x=100,y=40)
+button1 = Button(text='Select File',command=Open1).place(x=20,y=70)
+Amplitude1 = Scale(Gui,label='Amplitude',orient=HORIZONTAL,length=220,width=20,sliderlength=20,from_=-50,to=50,tickinterval=20,command=Store_value_amplitude1).place(x=20,y=100)
+playbutton1 = Button(text='►',fg='black',command=Playwavfile1).place(x=20,y=600)
+timescaling1 = Scale(Gui,label='Time Scale',orient = HORIZONTAL,length = 220, width = 20,sliderlength = 30,from_=-10,to=10,tickinterval=2,command=Store_value_timescaling1).place(x=20,y=200)
+timeshifting1 = Scale(Gui,label='Time Shift',orient=HORIZONTAL,length = 220,width=20,sliderlength=30,from_=-10,to=10,tickinterval=2,command=Store_value_timeshifting1).place(x=20,y=300)
+label2=Label(text="Wave 2").place(x=400,y=40)
+button2 = Button(text='Select File',command=Open2).place(x=320,y=70)
+Amplitude2 = Scale(Gui,label='Amplitude',orient=HORIZONTAL,length=220,width=20,sliderlength=30,from_=-50,to=50,tickinterval=20,command=Store_value_amplitude2).place(x=320,y=100)
+playbutton2 = Button(text='►',fg='black',command=Playwavfile2).place(x=320,y=600)
+timescaling2 = Scale(Gui,label='Time Scale',orient = HORIZONTAL,length = 220, width = 20,sliderlength = 30,from_=-10,to=10,tickinterval=2,command=Store_value_timescaling2).place(x=320,y=200)
+timeshifting2 = Scale(Gui,label='Time Shift',orient=HORIZONTAL,length = 220,width=20,sliderlength=30,from_=-10,to=10,tickinterval=2,command=Store_value_timeshifting2).place(x=320,y=300)
+label3=Label(text="Wave 3").place(x=700,y=40)
+button3 = Button(text='Select File',command=Open3).place(x=620,y=70)
+Amplitude3 = Scale(Gui,label='Amplitude',orient=HORIZONTAL,length=220,width=20,sliderlength=30,from_=-50,to=50,tickinterval=20,command=Store_value_amplitude3).place(x=620,y=100)
+playbutton3 = Button(text='►',fg='black',command=Playwavfile3).place(x=620,y=600)
+timescaling3 = Scale(Gui,label='Time Scale',orient = HORIZONTAL,length = 220, width = 20,sliderlength = 30,from_=-10,to=10,tickinterval=2,command=Store_value_timescaling3).place(x=620,y=200)
+timeshifting3 = Scale(Gui,label='Time Shift',orient=HORIZONTAL,length = 220,width=20,sliderlength=30,from_=-10,to=10,tickinterval=2,command=Store_value_timeshifting3).place(x=620,y=300)
+
+
+Gui.mainloop()
+
+
+
